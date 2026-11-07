@@ -1,20 +1,37 @@
-
 from collections import deque
 
 
 def is_palindrome(text):
-    text = "".join(char.lower() for char in text if not char.isspace())
-    chars = deque(text)
+    """
+    Перевіряє, чи є рядок паліндромом.
 
+    Регістр символів та пробіли не враховуються.
+    """
+
+    # Прибираємо пробіли та переводимо символи
+    # у нижній регістр
+    normalized_text = "".join(
+        char.lower()
+        for char in text
+        if not char.isspace()
+    )
+
+    # Додаємо символи до двосторонньої черги
+    chars = deque(normalized_text)
+
+    # Порівнюємо символи зліва та справа
     while len(chars) > 1:
-        if chars.popleft() != chars.pop():
+        left_char = chars.popleft()
+        right_char = chars.pop()
+
+        if left_char != right_char:
             return False
 
     return True
 
 
 def main():
-    text = input("Введіть рядок для перевірки: ")
+    text = input("Введіть рядок: ")
 
     if is_palindrome(text):
         print("Рядок є паліндромом.")
